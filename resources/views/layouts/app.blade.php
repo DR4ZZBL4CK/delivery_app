@@ -362,6 +362,36 @@
             color: #666;
             font-size: 0.9rem;
         }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            text-align: center;
+        }
+
+        .badge-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .badge-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .badge-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ff8c00 100%);
+            color: white;
+        }
+
+        .badge-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
     </style>
     @stack('styles')
 </head>
@@ -371,13 +401,16 @@
         <nav class="container">
             <div class="nav">
                 <div class="logo">
-                    <i class="fas fa-address-book"></i>
-                    Gestión de Contactos
+                    <i class="fas fa-truck"></i>
+                    Delivery App
                 </div>
                 <ul class="nav-links">
                     <li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="{{ route('contacts.index') }}"><i class="fas fa-users"></i> Contactos</a></li>
-                    <li><a href="{{ route('contacts.create') }}"><i class="fas fa-plus"></i> Nuevo Contacto</a></li>
+                    <li><a href="{{ route('api.documentation') }}"><i class="fas fa-book"></i> API Docs</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    <li><a href="{{ route('paquetes.index') }}"><i class="fas fa-box"></i> Paquetes</a></li>
+                    <li><a href="{{ route('camioneros.index') }}"><i class="fas fa-truck"></i> Camioneros</a></li>
+                    <li><a href="{{ route('camiones.index') }}"><i class="fas fa-truck-loading"></i> Camiones</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                             @csrf

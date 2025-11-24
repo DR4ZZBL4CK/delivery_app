@@ -100,6 +100,1097 @@
                 }
             }
         },
+        "/camiones": {
+            "get": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Listar camiones",
+                "description": "Obtiene una lista paginada de camiones con búsqueda",
+                "operationId": "60ecfe495b428e9c89a1f973da8adc65",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Elementos por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Buscar por placa o modelo",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "ABC123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de camiones obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Crear camión",
+                "description": "Crea un nuevo camión. Requiere rol admin.",
+                "operationId": "e8b3d114ee7a0126e1ee747fe9164e28",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "placa",
+                                    "modelo"
+                                ],
+                                "properties": {
+                                    "placa": {
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "minLength": 5,
+                                        "example": "ABC123"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "minLength": 2,
+                                        "example": "2020"
+                                    },
+                                    "camioneros": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Camión creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/camiones/{id}": {
+            "get": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Obtener camión",
+                "description": "Obtiene los detalles de un camión específico",
+                "operationId": "cd374bced49ddfc5efa2e693e9cdb7c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camión obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camión no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Actualizar camión",
+                "description": "Actualiza un camión existente. Requiere rol admin.",
+                "operationId": "adbb75344a2d54d4944e01d1d206ca18",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "placa": {
+                                        "type": "string",
+                                        "example": "XYZ789"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "example": "2021"
+                                    },
+                                    "camioneros": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Camión actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camión no encontrado"
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Eliminar camión",
+                "description": "Elimina un camión. Requiere rol admin.",
+                "operationId": "9d251c011a6ac8f29d14faec232e9c31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camión eliminado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camión no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/camioneros": {
+            "get": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Listar camioneros",
+                "description": "Obtiene una lista paginada de camioneros con búsqueda",
+                "operationId": "667ed993a34fbfc189dab0187f6665ac",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Elementos por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Buscar por nombre, apellido, documento o licencia",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Juan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de camioneros obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 25
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Crear camionero",
+                "description": "Crea un nuevo camionero. Requiere rol admin. El camionero debe ser mayor de 18 años.",
+                "operationId": "004dbdfd62bac89338b1c0adf96581f1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "documento",
+                                    "nombre",
+                                    "apellido",
+                                    "fecha_nacimiento",
+                                    "licencia",
+                                    "telefono"
+                                ],
+                                "properties": {
+                                    "documento": {
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "minLength": 5,
+                                        "example": "1234567890"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "maxLength": 45,
+                                        "minLength": 2,
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "maxLength": 45,
+                                        "minLength": 2,
+                                        "example": "Pérez"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-15"
+                                    },
+                                    "licencia": {
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "minLength": 5,
+                                        "example": "ABC12345"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "maxLength": 15,
+                                        "minLength": 7,
+                                        "example": "+57 300 1234567"
+                                    },
+                                    "camiones": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Camionero creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/camioneros/{id}": {
+            "get": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Obtener camionero",
+                "description": "Obtiene los detalles de un camionero específico",
+                "operationId": "cd37bd3bc0d2ac552c05e161067d216e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camionero obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camionero no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Actualizar camionero",
+                "description": "Actualiza un camionero existente. Requiere rol admin.",
+                "operationId": "d3c403b794ee7bdb37cdc024338b3da6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Pérez"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-15"
+                                    },
+                                    "licencia": {
+                                        "type": "string",
+                                        "example": "ABC12345"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "+57 300 1234567"
+                                    },
+                                    "camiones": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Camionero actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camionero no encontrado"
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Eliminar camionero",
+                "description": "Elimina un camionero. Requiere rol admin.",
+                "operationId": "06e4b280a16f8a3fd6a514c5569eb755",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camionero eliminado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Camionero no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/paquetes": {
+            "get": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Listar paquetes",
+                "description": "Obtiene una lista paginada de paquetes con opciones de filtrado",
+                "operationId": "fcc589560a15ae1ac2b9033b36471ed5",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Elementos por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "camioneros_id",
+                        "in": "query",
+                        "description": "Filtrar por ID de camionero",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "estados_paquetes_id",
+                        "in": "query",
+                        "description": "Filtrar por ID de estado",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de paquetes obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Crear paquete",
+                "description": "Crea un nuevo paquete con sus detalles. Requiere rol admin.",
+                "operationId": "9abc0e946f172cd9b670c98531660810",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "camioneros_id",
+                                    "estados_paquetes_id",
+                                    "direccion"
+                                ],
+                                "properties": {
+                                    "camioneros_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estados_paquetes_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "maxLength": 25,
+                                        "example": "Calle 123 #45-67"
+                                    },
+                                    "detalles": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "tipo_mercancia_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "dimencion": {
+                                                    "type": "string",
+                                                    "maxLength": 45,
+                                                    "example": "50x30x40 cm"
+                                                },
+                                                "peso": {
+                                                    "type": "string",
+                                                    "maxLength": 45,
+                                                    "example": "15 kg"
+                                                },
+                                                "fecha_entrega": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-12-01"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Paquete creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/paquetes/{id}": {
+            "get": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Obtener paquete",
+                "description": "Obtiene los detalles de un paquete específico",
+                "operationId": "425a12f3e1c1357217e49f31b3283b16",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paquete obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paquete no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Actualizar paquete",
+                "description": "Actualiza un paquete existente. Requiere rol admin.",
+                "operationId": "99b16ef37e4fe00f26347cf1d5602664",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "camioneros_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estados_paquetes_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "maxLength": 25,
+                                        "example": "Nueva Calle 456"
+                                    },
+                                    "detalles": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "tipo_mercancia_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "dimencion": {
+                                                    "type": "string",
+                                                    "example": "60x40x50 cm"
+                                                },
+                                                "peso": {
+                                                    "type": "string",
+                                                    "example": "20 kg"
+                                                },
+                                                "fecha_entrega": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-12-05"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Paquete actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paquete no encontrado"
+                    },
+                    "422": {
+                        "description": "Errores de validación"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Eliminar paquete",
+                "description": "Elimina un paquete. Requiere rol admin.",
+                "operationId": "8cd088e7bc25b4853bcc28f39d9f2c09",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paquete eliminado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paquete no encontrado"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado - Se requiere rol admin"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/health-check": {
             "get": {
                 "summary": "Health Check",
@@ -147,6 +1238,18 @@
         {
             "name": "Autenticación",
             "description": "Endpoints de autenticación y gestión de usuarios"
+        },
+        {
+            "name": "Camiones",
+            "description": "Endpoints para gestión de camiones"
+        },
+        {
+            "name": "Camioneros",
+            "description": "Endpoints para gestión de camioneros"
+        },
+        {
+            "name": "Paquetes",
+            "description": "Endpoints para gestión de paquetes"
         }
     ]
 }
