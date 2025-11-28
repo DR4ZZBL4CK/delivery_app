@@ -40,9 +40,8 @@ class PaqueteTest extends TestCase
             'estados_paquetes_id' => $estado->id,
         ]);
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->getJson('/api/paquetes');
+        $response = $this->withToken($this->token)
+            ->getJson('/api/paquetes');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -73,9 +72,8 @@ class PaqueteTest extends TestCase
             ],
         ];
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->adminToken,
-        ])->postJson('/api/paquetes', $paqueteData);
+        $response = $this->withToken($this->adminToken)
+            ->postJson('/api/paquetes', $paqueteData);
 
         $response->assertStatus(201)
             ->assertJsonStructure([
@@ -97,9 +95,8 @@ class PaqueteTest extends TestCase
             'estados_paquetes_id' => $estado->id,
         ]);
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->getJson("/api/paquetes/{$paquete->id}");
+        $response = $this->withToken($this->token)
+            ->getJson("/api/paquetes/{$paquete->id}");
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -121,9 +118,8 @@ class PaqueteTest extends TestCase
             'direccion' => 'Nueva dirección 456',
         ];
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->adminToken,
-        ])->putJson("/api/paquetes/{$paquete->id}", $updateData);
+        $response = $this->withToken($this->adminToken)
+            ->putJson("/api/paquetes/{$paquete->id}", $updateData);
 
         $response->assertStatus(200);
 
@@ -143,9 +139,8 @@ class PaqueteTest extends TestCase
             'estados_paquetes_id' => $estado->id,
         ]);
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->adminToken,
-        ])->deleteJson("/api/paquetes/{$paquete->id}");
+        $response = $this->withToken($this->adminToken)
+            ->deleteJson("/api/paquetes/{$paquete->id}");
 
         $response->assertStatus(200)
             ->assertJson(['message' => 'Eliminado']);
@@ -181,9 +176,8 @@ class PaqueteTest extends TestCase
             ],
         ];
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->postJson('/api/paquetes', $paqueteData);
+        $response = $this->withToken($this->token)
+            ->postJson('/api/paquetes', $paqueteData);
 
         $response->assertStatus(403);
     }
@@ -197,9 +191,8 @@ class PaqueteTest extends TestCase
             'estados_paquetes_id' => $estado->id,
         ]);
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->putJson("/api/paquetes/{$paquete->id}", ['direccion' => 'Nueva dirección']);
+        $response = $this->withToken($this->token)
+            ->putJson("/api/paquetes/{$paquete->id}", ['direccion' => 'Nueva dirección']);
 
         $response->assertStatus(403);
     }
@@ -213,9 +206,8 @@ class PaqueteTest extends TestCase
             'estados_paquetes_id' => $estado->id,
         ]);
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->deleteJson("/api/paquetes/{$paquete->id}");
+        $response = $this->withToken($this->token)
+            ->deleteJson("/api/paquetes/{$paquete->id}");
 
         $response->assertStatus(403);
     }

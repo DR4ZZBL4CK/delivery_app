@@ -13,7 +13,7 @@ class PaqueteFactory extends Factory
         return [
             'camioneros_id' => Camionero::factory(),
             'estados_paquetes_id' => EstadoPaquete::factory(),
-            'direccion' => $this->faker->address(),
+            'direccion' => 'Calle ' . $this->faker->numberBetween(1, 99) . ' #' . $this->faker->numberBetween(1, 99),
         ];
     }
 }

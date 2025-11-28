@@ -28,11 +28,11 @@ class PaquetePolicy
 
     /**
      * Determine whether the user can create models.
-     * Solo usuarios autenticados pueden crear paquetes.
+     * Solo admins pueden crear paquetes para aislamiento de datos.
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
