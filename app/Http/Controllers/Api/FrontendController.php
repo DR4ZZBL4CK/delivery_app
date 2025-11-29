@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+
+use App\Http\Controllers\Api\CamionController;
+use App\Http\Controllers\Api\CamioneroController;
+use App\Http\Controllers\Api\PaqueteController;
 
 class FrontendController extends Controller
 {
@@ -48,136 +51,85 @@ class FrontendController extends Controller
 
     public function getPaquetes(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->get($this->apiBaseUrl . '/paquetes', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        return app(PaqueteController::class)->index($request);
     }
 
     public function getCamioneros(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->get($this->apiBaseUrl . '/camioneros', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        return app(CamioneroController::class)->index($request);
     }
 
     public function getCamiones(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->get($this->apiBaseUrl . '/camiones', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        return app(CamionController::class)->index($request);
     }
 
     public function createCamion(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->post($this->apiBaseUrl . '/camiones', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        // Crear una nueva instancia de la solicitud con los datos del request actual
+        $storeRequest = \App\Http\Requests\StoreCamionRequest::createFrom($request);
+        $storeRequest->setContainer(app());
+        return app(CamionController::class)->store($storeRequest);
     }
 
     public function deleteCamion($id): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->delete($this->apiBaseUrl . '/camiones/' . $id);
-
-        return response()->json($response->json(), $response->status());
+        $camion = \App\Models\Camion::findOrFail($id);
+        return app(CamionController::class)->destroy($camion);
     }
 
     public function createCamionero(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->post($this->apiBaseUrl . '/camioneros', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        // Crear una nueva instancia de la solicitud con los datos del request actual
+        $storeRequest = \App\Http\Requests\StoreCamioneroRequest::createFrom($request);
+        $storeRequest->setContainer(app());
+        return app(CamioneroController::class)->store($storeRequest);
     }
 
     public function deleteCamionero($id): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->delete($this->apiBaseUrl . '/camioneros/' . $id);
-
-        return response()->json($response->json(), $response->status());
+        $camionero = \App\Models\Camionero::findOrFail($id);
+        return app(CamioneroController::class)->destroy($camionero);
     }
 
     public function createPaquete(Request $request): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->post($this->apiBaseUrl . '/paquetes', $request->all());
-
-        return response()->json($response->json(), $response->status());
+        // Crear una nueva instancia de la solicitud con los datos del request actual
+        $storeRequest = \App\Http\Requests\StorePaqueteRequest::createFrom($request);
+        $storeRequest->setContainer(app());
+        return app(PaqueteController::class)->store($storeRequest);
     }
 
     public function deletePaquete($id): JsonResponse
     {
-        $token = session('api_token');
-        
-        if (!$token) {
+        if (!auth()->check()) {
             return response()->json(['message' => 'No autenticado'], 401);
         }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->delete($this->apiBaseUrl . '/paquetes/' . $id);
-
-        return response()->json($response->json(), $response->status());
+        $paquete = \App\Models\Paquete::findOrFail($id);
+        return app(PaqueteController::class)->destroy($paquete);
     }
 }

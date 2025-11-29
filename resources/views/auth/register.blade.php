@@ -10,7 +10,7 @@
                 <i class="fas fa-user-plus"></i>
                 Crear Cuenta
             </h2>
-            <p style="color: #666; margin: 0;">Únete y comienza a gestionar tus contactos</p>
+            <p style="color: #B0D4F0; margin: 0;">Únete y comienza a gestionar tus contactos</p>
         </div>
 
         <form method="POST" action="{{ route('register') }}">
@@ -103,9 +103,9 @@
         </form>
 
         <div style="text-align: center; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
-            <p style="color: #666;">
+            <p style="color: #B0D4F0;">
                 ¿Ya tienes una cuenta? 
-                <a href="{{ route('login') }}" style="color: #667eea; text-decoration: none; font-weight: 500;">
+                <a href="{{ route('login') }}" style="color: #12C6EB; text-decoration: none; font-weight: 500;">
                     Inicia sesión aquí
                 </a>
             </p>

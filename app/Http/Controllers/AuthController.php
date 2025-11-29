@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
+
 
 class AuthController extends Controller
 {
@@ -52,18 +52,9 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        // Obtener token API al registrar y loguear
-        try {
-            $apiLogin = Http::post(config('app.url') . '/api/auth/login', [
-                'email' => $request->input('email'),
-                'password' => $request->input('password'),
-            ]);
-            if ($apiLogin->successful() && isset($apiLogin->json()['token'])) {
-                $request->session()->put('api_token', $apiLogin->json()['token']);
-            }
-        } catch (\Throwable $e) {
-            // Podemos registrar en log si es necesario
-        }
+        // Generar token API directamente sin llamada HTTP
+        $token = $user->createToken('api-token')->plainTextToken;
+        $request->session()->put('api_token', $token);
 
         return redirect()->route('dashboard')->with('success', '¡Registro exitoso! Bienvenido/a.');
     }
@@ -86,18 +77,9 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            // Obtener token API tras login web
-            try {
-                $apiLogin = Http::post(config('app.url') . '/api/auth/login', [
-                    'email' => $request->input('email'),
-                    'password' => $request->input('password'),
-                ]);
-                if ($apiLogin->successful() && isset($apiLogin->json()['token'])) {
-                    $request->session()->put('api_token', $apiLogin->json()['token']);
-                }
-            } catch (\Throwable $e) {
-                // Podemos registrar en log si es necesario
-            }
+            // Generar token API directamente sin llamada HTTP
+            $token = $user->createToken('api-token')->plainTextToken;
+            $request->session()->put('api_token', $token);
 
             return redirect()->intended('dashboard')->with('success', '¡Inicio de sesión exitoso!');
         }

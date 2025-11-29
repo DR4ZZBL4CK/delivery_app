@@ -10,7 +10,7 @@
                 <i class="fas fa-box"></i>
                 Paquetes
             </h1>
-            <p style="color: #666; margin: 0;">Gestión completa de paquetes desde la API.</p>
+            <p style="color: #B0D4F0; margin: 0;">Gestión completa de paquetes desde la API.</p>
         </div>
         @if(auth()->user()->role === 'admin')
         <button id="btnNuevoPaquete" class="btn btn-success">
@@ -42,7 +42,7 @@
             <tbody id="paquetesTableBody">
                 <tr>
                     <td colspan="6">
-                        <div style="text-align: center; color: #666;">
+                        <div style="text-align: center; color: #B0D4F0;">
                             <span class="spinner"></span>
                             Cargando paquetes...
                         </div>
@@ -54,15 +54,16 @@
 
     <div id="pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
         <button id="prevPage" class="btn btn-secondary" disabled><i class="fas fa-chevron-left"></i> Anterior</button>
-        <div id="pageInfo" style="color: #666;">Página - de -</div>
+        <div id="pageInfo" style="color: #B0D4F0;">Página - de -</div>
         <button id="nextPage" class="btn btn-secondary" disabled>Siguiente <i class="fas fa-chevron-right"></i></button>
     </div>
 </div>
-
 <!-- Modal para Crear/Editar Paquete -->
-<div id="modalPaquete" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
-    <div style="background: white; max-width: 600px; margin: 2rem auto; border-radius: 15px; padding: 2rem; max-height: 90vh; overflow-y: auto;">
+<div id="modalPaquete" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div class="modal-content" style="background: white; max-width: 600px; margin: 2rem auto; border-radius: 8px; padding: 2rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Nuevo Paquete</h2>
+
+
         <form id="formPaquete">
             <input type="hidden" id="paqueteId">
             
@@ -127,7 +128,9 @@
 
     async function loadCamioneros() {
         try {
-            const response = await fetch('/api/camioneros');
+            const response = await fetch('/internal/camioneros', {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
             camioneros = data.data || [];
             
@@ -145,7 +148,9 @@
 
     async function loadEstados() {
         try {
-            const response = await fetch('/api/estados-paquetes');
+            const response = await fetch('/internal/estados-paquetes', {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
             estados = data.data || data || [];
             
@@ -180,7 +185,7 @@
         tbody.innerHTML = `
             <tr>
                 <td colspan="${isAdmin ? '6' : '5'}">
-                    <div style="text-align: center; color: #666;">
+                    <div style="text-align: center; color: #B0D4F0;">
                         <span class="spinner"></span>
                         Cargando paquetes...
                     </div>
@@ -189,7 +194,12 @@
         `;
 
         try {
-            const response = await fetch(`/api/paquetes?${params.toString()}`);
+            const response = await fetch(`/internal/paquetes?${params.toString()}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            });
             const data = await response.json();
 
             if (!response.ok) {
@@ -223,7 +233,7 @@
         if (!items || items.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="${isAdmin ? '6' : '5'}" style="text-align: center; color: #666;">
+                    <td colspan="${isAdmin ? '6' : '5'}" style="text-align: center; color: #B0D4F0;">
                         No hay paquetes disponibles.
                     </td>
                 </tr>
@@ -278,7 +288,7 @@
 
     async function editarPaquete(id) {
         try {
-            const response = await fetch(`/api/paquetes/${id}`);
+            const response = await fetch(`/internal/paquetes/${id}`);
             const paquete = await response.json();
             
             document.getElementById('modalTitle').textContent = 'Editar Paquete';
@@ -305,7 +315,7 @@
         };
 
         try {
-            const url = id ? `/api/paquetes/${id}` : '/api/paquetes';
+            const url = id ? `/internal/paquetes/${id}` : '/internal/paquetes';
             const method = id ? 'PUT' : 'POST';
             
             const response = await fetch(url, {
@@ -343,7 +353,7 @@
         }
 
         try {
-            const response = await fetch(`/api/paquetes/${id}`, {
+            const response = await fetch(`/internal/paquetes/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',

@@ -9,7 +9,7 @@
             <i class="fas fa-truck"></i>
             Camioneros
         </h1>
-        <p style="color: #666; margin: 0;">Listado de camioneros desde la API (con token).</p>
+        <p style="color: #B0D4F0; margin: 0;">Listado de camioneros desde la API (con token).</p>
     </div>
 
     <div class="actions-bar" style="padding: 1rem; border-bottom: 1px solid #eee;">
@@ -41,7 +41,7 @@
             <tbody id="camionerosTableBody">
                 <tr>
                     <td colspan="8">
-                        <div style="text-align: center; color: #666;">
+                        <div style="text-align: center; color: #B0D4F0;">
                             <span class="spinner"></span>
                             Cargando camioneros...
                         </div>
@@ -53,7 +53,7 @@
 
     <div id="pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
         <button id="prevPage" class="btn btn-secondary" disabled><i class="fas fa-chevron-left"></i> Anterior</button>
-        <div id="pageInfo" style="color: #666;">Página - de -</div>
+        <div id="pageInfo" style="color: #B0D4F0;">Página - de -</div>
         <button id="nextPage" class="btn btn-secondary" disabled>Siguiente <i class="fas fa-chevron-right"></i></button>
     </div>
 </div>
@@ -134,7 +134,7 @@
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/api/camioneros', {
+            const response = await fetch('/internal/camioneros', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -160,7 +160,7 @@
         if (!confirm('¿Está seguro de eliminar este camionero?')) return;
 
         try {
-            const response = await fetch(`/api/camioneros/${id}`, {
+            const response = await fetch(`/internal/camioneros/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
@@ -190,7 +190,7 @@
         tbody.innerHTML = `
             <tr>
                 <td colspan="8">
-                    <div style="text-align: center; color: #666;">
+                    <div style="text-align: center; color: #B0D4F0;">
                         <span class="spinner"></span>
                         Cargando camioneros...
                     </div>
@@ -199,7 +199,9 @@
         `;
 
         try {
-            const response = await fetch(`/api/camioneros?${params.toString()}`);
+            const response = await fetch(`/internal/camioneros?${params.toString()}`, {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
 
             if (!response.ok) {
@@ -233,7 +235,7 @@
         if (!items || items.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="8" style="text-align: center; color: #666;">
+                    <td colspan="8" style="text-align: center; color: #B0D4F0;">
                         No hay camioneros disponibles.
                     </td>
                 </tr>

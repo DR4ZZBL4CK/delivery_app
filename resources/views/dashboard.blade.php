@@ -9,7 +9,7 @@
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
         </h1>
-        <p style="color: #666; margin: 0;">¡Bienvenido/a, {{ $user->full_name }}!</p>
+        <p style="color: #B0D4F0; margin: 0;">¡Bienvenido/a, {{ $user->full_name }}!</p>
     </div>
 
     <div class="stats-grid">
@@ -40,13 +40,13 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
         <div>
-            <h3 style="margin-bottom: 1rem; color: #333;">
+            <h3 style="margin-bottom: 1rem; color: #12C6EB;">
                 <i class="fas fa-box"></i>
                 Paquetes Recientes
             </h3>
             
-            <div id="paquetes-list" style="background: #f8f9fa; border-radius: 8px; padding: 1rem;">
-                <div style="text-align: center; padding: 2rem; color: #666;">
+            <div id="paquetes-list" style="background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1rem;">
+                <div style="text-align: center; padding: 2rem; color: #B0D4F0;">
                     <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
                     <p>Cargando paquetes...</p>
                 </div>
@@ -54,7 +54,7 @@
         </div>
 
         <div>
-            <h3 style="margin-bottom: 1rem; color: #333;">
+            <h3 style="margin-bottom: 1rem; color: #12C6EB;">
                 <i class="fas fa-rocket"></i>
                 Acciones Rápidas
             </h3>
@@ -76,7 +76,7 @@
                 </button>
             </div>
 
-            <div style="margin-top: 2rem; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white;">
+            <div style="margin-top: 2rem; padding: 1rem; background: linear-gradient(135deg, #12C6EB 0%, #0a9ab8 100%); border-radius: 8px; color: #041A48;">
                 <h4 style="margin-bottom: 0.5rem;">
                     <i class="fas fa-lightbulb"></i>
                     Sistema de Delivery
@@ -91,9 +91,9 @@
 
 <div class="card" style="text-align: center;">
     <div style="padding: 3rem;">
-        <i class="fas fa-truck" style="font-size: 4rem; color: #667eea; margin-bottom: 1rem;"></i>
-        <h2 style="color: #333; margin-bottom: 1rem;">¡Sistema de Delivery Activo!</h2>
-        <p style="color: #666; margin-bottom: 2rem; font-size: 1.1rem;">
+        <i class="fas fa-truck" style="font-size: 4rem; color: #12C6EB; margin-bottom: 1rem;"></i>
+        <h2 style="color: #12C6EB; margin-bottom: 1rem;">¡Sistema de Delivery Activo!</h2>
+        <p style="color: #B0D4F0; margin-bottom: 2rem; font-size: 1.1rem;">
             Usa los botones de arriba para gestionar paquetes, camioneros y camiones.
         </p>
         <button onclick="loadPaquetes()" class="btn btn-success" style="font-size: 1.1rem; padding: 1rem 2rem;">
@@ -125,7 +125,9 @@
 
     async function loadPaquetes() {
         try {
-            const response = await fetch('/api/paquetes');
+            const response = await fetch('/internal/paquetes', {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
             
             if (response.ok) {
@@ -141,7 +143,9 @@
 
     async function loadCamioneros() {
         try {
-            const response = await fetch('/api/camioneros');
+            const response = await fetch('/internal/camioneros', {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
             
             if (response.ok) {
@@ -156,7 +160,9 @@
 
     async function loadCamiones() {
         try {
-            const response = await fetch('/api/camiones');
+            const response = await fetch('/internal/camiones', {
+                headers: { 'Accept': 'application/json' }
+            });
             const data = await response.json();
             
             if (response.ok) {
@@ -174,7 +180,7 @@
         
         if (paquetes.length === 0) {
             container.innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: #666;">
+                <div style="text-align: center; padding: 2rem; color: #B0D4F0;">
                     <i class="fas fa-box" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
                     <p>No hay paquetes disponibles.</p>
                 </div>
@@ -185,10 +191,10 @@
         let html = '';
         paquetes.slice(0, 5).forEach(paquete => {
             html += `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #e0e0e0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                     <div>
                         <strong>${paquete.direccion}</strong><br>
-                        <small style="color: #666;">
+                        <small style="color: #B0D4F0;">
                             Camionero: ${paquete.camionero.nombre} ${paquete.camionero.apellido} | 
                             Estado: ${paquete.estado.estado}
                         </small>

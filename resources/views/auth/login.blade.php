@@ -10,7 +10,7 @@
                 <i class="fas fa-sign-in-alt"></i>
                 Iniciar Sesión
             </h2>
-            <p style="color: #666; margin: 0;">Accede a tu cuenta para gestionar tus contactos</p>
+            <p style="color: #B0D4F0; margin: 0;">Accede a tu cuenta para gestionar tus contactos</p>
         </div>
 
         <form method="POST" action="{{ route('login') }}">
@@ -64,9 +64,9 @@
         </form>
 
         <div style="text-align: center; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
-            <p style="color: #666;">
+            <p style="color: #B0D4F0;">
                 ¿No tienes una cuenta? 
-                <a href="{{ route('register') }}" style="color: #667eea; text-decoration: none; font-weight: 500;">
+                <a href="{{ route('register') }}" style="color: #12C6EB; text-decoration: none; font-weight: 500;">
                     Regístrate aquí
                 </a>
             </p>
