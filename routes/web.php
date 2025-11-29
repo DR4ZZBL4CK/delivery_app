@@ -50,6 +50,16 @@ Route::prefix('api')->group(function () {
     Route::get('/paquetes', [FrontendController::class, 'getPaquetes'])->name('api.paquetes');
     Route::get('/camioneros', [FrontendController::class, 'getCamioneros'])->name('api.camioneros');
     Route::get('/camiones', [FrontendController::class, 'getCamiones'])->name('api.camiones');
+
+    // Create and Delete routes (proxy to API)
+    Route::post('/camiones', [FrontendController::class, 'createCamion'])->name('api.camiones.create');
+    Route::delete('/camiones/{id}', [FrontendController::class, 'deleteCamion'])->name('api.camiones.delete');
+
+    Route::post('/camioneros', [FrontendController::class, 'createCamionero'])->name('api.camioneros.create');
+    Route::delete('/camioneros/{id}', [FrontendController::class, 'deleteCamionero'])->name('api.camioneros.delete');
+
+    Route::post('/paquetes', [FrontendController::class, 'createPaquete'])->name('api.paquetes.create');
+    Route::delete('/paquetes/{id}', [FrontendController::class, 'deletePaquete'])->name('api.paquetes.delete');
 });
 
 // 🔒 RUTAS PROTEGIDAS (solo usuarios autenticados)
