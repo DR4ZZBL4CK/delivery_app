@@ -41,7 +41,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // 🌐 API FRONTEND (rutas internas del sistema)
-Route::prefix('internal')->group(function () {
+Route::prefix('api')->group(function () {
     // Login para obtener token (accesible para invitados)
     Route::post('/login', [FrontendController::class, 'login'])->name('api.login');
 
