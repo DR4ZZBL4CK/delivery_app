@@ -9,7 +9,7 @@
             <i class="fas fa-user-shield"></i>
             Panel de Administración
         </h1>
-        <p style="color: #B0D4F0; margin: 0;">Bienvenido/a, {{ $user->full_name }} ({{ $user->role }})</p>
+        <p style="color: #B0D4F0; margin: 0;">Bienvenido/a, {{ auth()->user()->full_name }} ({{ auth()->user()->role }})</p>
     </div>
 
     <div class="stats-grid">
@@ -78,21 +78,21 @@
     async function loadStats() {
         try {
             // Cargar estadísticas de paquetes
-            const paquetesResponse = await fetch('/internal/paquetes', { headers: { 'Accept': 'application/json' } });
+            const paquetesResponse = await fetch('/api/paquetes', { headers: { 'Accept': 'application/json' } });
             if (paquetesResponse.ok) {
                 const paquetesData = await paquetesResponse.json();
                 document.getElementById('paquetes-count').textContent = paquetesData.meta?.total || 0;
             }
 
             // Cargar estadísticas de camioneros
-            const camionerosResponse = await fetch('/internal/camioneros', { headers: { 'Accept': 'application/json' } });
+            const camionerosResponse = await fetch('/api/camioneros', { headers: { 'Accept': 'application/json' } });
             if (camionerosResponse.ok) {
                 const camionerosData = await camionerosResponse.json();
                 document.getElementById('camioneros-count').textContent = camionerosData.meta?.total || 0;
             }
 
             // Cargar estadísticas de camiones
-            const camionesResponse = await fetch('/internal/camiones', { headers: { 'Accept': 'application/json' } });
+            const camionesResponse = await fetch('/api/camiones', { headers: { 'Accept': 'application/json' } });
             if (camionesResponse.ok) {
                 const camionesData = await camionesResponse.json();
                 document.getElementById('camiones-count').textContent = camionesData.meta?.total || 0;
@@ -103,4 +103,3 @@
     }
 </script>
 @endpush
-

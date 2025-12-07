@@ -114,7 +114,7 @@
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/internal/camiones', {
+            const response = await fetch('/api/camiones', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +140,7 @@
         if (!confirm('¿Está seguro de eliminar este camión?')) return;
 
         try {
-            const response = await fetch(`/internal/camiones/${id}`, {
+            const response = await fetch(`/api/camiones/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
@@ -179,7 +179,7 @@
         `;
 
         try {
-            const response = await fetch(`/internal/camiones?${params.toString()}`, {
+            const response = await fetch(`/api/camiones?${params.toString()}`, {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();

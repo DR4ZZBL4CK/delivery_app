@@ -40,32 +40,31 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-// 🌐 API FRONTEND (rutas internas del sistema)
-Route::prefix('api')->group(function () {
-    // Login para obtener token (accesible para invitados)
-    Route::post('/login', [FrontendController::class, 'login'])->name('api.login');
-
-    // Logout y recursos requieren tener token en sesión; opcionalmente podemos proteger con 'auth'
-    Route::post('/logout', [FrontendController::class, 'logout'])->name('api.logout');
-    Route::get('/paquetes', [FrontendController::class, 'getPaquetes'])->name('api.paquetes');
-    Route::get('/camioneros', [FrontendController::class, 'getCamioneros'])->name('api.camioneros');
-    Route::get('/camiones', [FrontendController::class, 'getCamiones'])->name('api.camiones');
-
-    // Create and Delete routes (proxy to API)
-    Route::post('/camiones', [FrontendController::class, 'createCamion'])->name('api.camiones.create');
-    Route::delete('/camiones/{id}', [FrontendController::class, 'deleteCamion'])->name('api.camiones.delete');
-
-    Route::post('/camioneros', [FrontendController::class, 'createCamionero'])->name('api.camioneros.create');
-    Route::delete('/camioneros/{id}', [FrontendController::class, 'deleteCamionero'])->name('api.camioneros.delete');
-
-    Route::post('/paquetes', [FrontendController::class, 'createPaquete'])->name('api.paquetes.create');
-    Route::delete('/paquetes/{id}', [FrontendController::class, 'deletePaquete'])->name('api.paquetes.delete');
-});
+// 🌐 API FRONTEND - Login (accesible para invitados)
+Route::post('/api/login', [FrontendController::class, 'login'])->name('api.login');
 
 // 🔒 RUTAS PROTEGIDAS (solo usuarios autenticados)
 Route::middleware('auth')->group(function () {
     // Cerrar sesión
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // API FRONTEND - Endpoints protegidos
+    Route::prefix('api')->group(function () {
+        Route::post('/logout', [FrontendController::class, 'logout'])->name('api.logout');
+        Route::get('/paquetes', [FrontendController::class, 'getPaquetes'])->name('api.paquetes');
+        Route::get('/camioneros', [FrontendController::class, 'getCamioneros'])->name('api.camioneros');
+        Route::get('/camiones', [FrontendController::class, 'getCamiones'])->name('api.camiones');
+
+        // Create and Delete routes (proxy to API)
+        Route::post('/camiones', [FrontendController::class, 'createCamion'])->name('api.camiones.create');
+        Route::delete('/camiones/{id}', [FrontendController::class, 'deleteCamion'])->name('api.camiones.delete');
+
+        Route::post('/camioneros', [FrontendController::class, 'createCamionero'])->name('api.camioneros.create');
+        Route::delete('/camioneros/{id}', [FrontendController::class, 'deleteCamionero'])->name('api.camioneros.delete');
+
+        Route::post('/paquetes', [FrontendController::class, 'createPaquete'])->name('api.paquetes.create');
+        Route::delete('/paquetes/{id}', [FrontendController::class, 'deletePaquete'])->name('api.paquetes.delete');
+    });
 
     // Dashboard general
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

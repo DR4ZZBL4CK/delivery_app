@@ -9,7 +9,7 @@
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
         </h1>
-        <p style="color: #B0D4F0; margin: 0;">¡Bienvenido/a, {{ $user->full_name }}!</p>
+        <p style="color: #B0D4F0; margin: 0;">¡Bienvenido/a, {{ auth()->user()->full_name }}!</p>
     </div>
 
     <div class="stats-grid">
@@ -125,7 +125,7 @@
 
     async function loadPaquetes() {
         try {
-            const response = await fetch('/internal/paquetes', {
+            const response = await fetch('/api/paquetes', {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();
@@ -143,7 +143,7 @@
 
     async function loadCamioneros() {
         try {
-            const response = await fetch('/internal/camioneros', {
+            const response = await fetch('/api/camioneros', {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();
@@ -160,7 +160,7 @@
 
     async function loadCamiones() {
         try {
-            const response = await fetch('/internal/camiones', {
+            const response = await fetch('/api/camiones', {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();

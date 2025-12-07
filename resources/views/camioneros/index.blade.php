@@ -134,7 +134,7 @@
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/internal/camioneros', {
+            const response = await fetch('/api/camioneros', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -160,7 +160,7 @@
         if (!confirm('¿Está seguro de eliminar este camionero?')) return;
 
         try {
-            const response = await fetch(`/internal/camioneros/${id}`, {
+            const response = await fetch(`/api/camioneros/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
@@ -199,7 +199,7 @@
         `;
 
         try {
-            const response = await fetch(`/internal/camioneros?${params.toString()}`, {
+            const response = await fetch(`/api/camioneros?${params.toString()}`, {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();

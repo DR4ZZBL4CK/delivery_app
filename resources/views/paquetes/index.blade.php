@@ -128,7 +128,7 @@
 
     async function loadCamioneros() {
         try {
-            const response = await fetch('/internal/camioneros', {
+            const response = await fetch('/api/camioneros', {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();
@@ -148,7 +148,7 @@
 
     async function loadEstados() {
         try {
-            const response = await fetch('/internal/estados-paquetes', {
+            const response = await fetch('/api/estados-paquetes', {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();
@@ -194,7 +194,7 @@
         `;
 
         try {
-            const response = await fetch(`/internal/paquetes?${params.toString()}`, {
+            const response = await fetch(`/api/paquetes?${params.toString()}`, {
                 headers: {
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
@@ -288,7 +288,7 @@
 
     async function editarPaquete(id) {
         try {
-            const response = await fetch(`/internal/paquetes/${id}`);
+            const response = await fetch(`/api/paquetes/${id}`);
             const paquete = await response.json();
             
             document.getElementById('modalTitle').textContent = 'Editar Paquete';
@@ -315,7 +315,7 @@
         };
 
         try {
-            const url = id ? `/internal/paquetes/${id}` : '/internal/paquetes';
+            const url = id ? `/api/paquetes/${id}` : '/api/paquetes';
             const method = id ? 'PUT' : 'POST';
             
             const response = await fetch(url, {
@@ -353,7 +353,7 @@
         }
 
         try {
-            const response = await fetch(`/internal/paquetes/${id}`, {
+            const response = await fetch(`/api/paquetes/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',

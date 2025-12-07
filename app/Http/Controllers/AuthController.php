@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -78,6 +79,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Generar token API directamente sin llamada HTTP
+            $user = Auth::user();
             $token = $user->createToken('api-token')->plainTextToken;
             $request->session()->put('api_token', $token);
 
