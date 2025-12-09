@@ -23,7 +23,7 @@
 
         <div class="stat-card">
             <div class="stat-icon">
-                <i class="fas fa-truck"></i>
+                <i class="fas fa-user"></i>
             </div>
             <div class="stat-number" id="camioneros-count">-</div>
             <div class="stat-label">Camioneros</div>
@@ -51,7 +51,7 @@
             </a>
             
             <a href="{{ route('camioneros.index') }}" class="btn btn-success" style="text-decoration: none;">
-                <i class="fas fa-truck"></i>
+                <i class="fas fa-user"></i>
                 Gestionar Camioneros
             </a>
             

@@ -6,7 +6,7 @@
 <div class="card">
     <div class="card-header">
         <h1 class="card-title">
-            <i class="fas fa-truck"></i>
+            <i class="fas fa-user"></i>
             Camioneros
         </h1>
         <p style="color: #B0D4F0; margin: 0;">Listado de camioneros desde la API (con token).</p>

@@ -580,11 +580,15 @@
                 </a>
                 <ul class="nav-links">
                     <li><a href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="{{ route('api.documentation') }}"><i class="fas fa-book"></i> API Docs</a></li>
-                    <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-user-shield"></i> Admin</a></li>
                     <li><a href="{{ route('paquetes.index') }}"><i class="fas fa-box"></i> Paquetes</a></li>
-                    <li><a href="{{ route('camioneros.index') }}"><i class="fas fa-truck"></i> Camioneros</a></li>
-                    <li><a href="{{ route('camiones.index') }}"><i class="fas fa-truck-loading"></i> Camiones</a></li>
+                    
+                    @if(auth()->user()->role === 'admin')
+                        <li><a href="{{ route('api.documentation') }}"><i class="fas fa-book"></i> API Docs</a></li>
+                        <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-user-shield"></i> Admin</a></li>
+                        <li><a href="{{ route('camioneros.index') }}"><i class="fas fa-user"></i> Camioneros</a></li>
+                        <li><a href="{{ route('camiones.index') }}"><i class="fas fa-truck-loading"></i> Camiones</a></li>
+                    @endif
+                    
                     <li>
                         <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                             @csrf

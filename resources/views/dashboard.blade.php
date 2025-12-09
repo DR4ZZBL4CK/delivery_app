@@ -23,7 +23,7 @@
 
         <div class="stat-card">
             <div class="stat-icon">
-                <i class="fas fa-truck"></i>
+                <i class="fas fa-user"></i>
             </div>
             <div class="stat-number" id="camioneros-count">-</div>
             <div class="stat-label">Camioneros</div>
@@ -66,7 +66,7 @@
                 </button>
                 
                 <button onclick="loadCamioneros()" class="btn btn-info">
-                    <i class="fas fa-truck"></i>
+                    <i class="fas fa-user"></i>
                     Ver Camioneros
                 </button>
                 
@@ -91,7 +91,7 @@
 
 <div class="card" style="text-align: center;">
     <div style="padding: 3rem;">
-        <i class="fas fa-truck" style="font-size: 4rem; color: #12C6EB; margin-bottom: 1rem;"></i>
+        <i class="fas fa-user" style="font-size: 4rem; color: #12C6EB; margin-bottom: 1rem;"></i>
         <h2 style="color: #12C6EB; margin-bottom: 1rem;">¡Sistema de Delivery Activo!</h2>
         <p style="color: #B0D4F0; margin-bottom: 2rem; font-size: 1.1rem;">
             Usa los botones de arriba para gestionar paquetes, camioneros y camiones.
